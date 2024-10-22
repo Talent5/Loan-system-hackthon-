@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { BarChart, DollarSign, Users, AlertTriangle, TrendingUp, Clock, Shield, Filter } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { BarChart, DollarSign, Users, AlertTriangle } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 // Type definitions
@@ -37,6 +36,13 @@ const trendData: TrendDataPoint[] = [
   { month: 'May', value: 15.2, approvalRate: 86 },
   { month: 'Jun', value: 16.1, approvalRate: 89 }
 ];
+
+// Simple card component to replace shadcn Card
+const Card: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className = '' }) => (
+  <div className={`bg-white rounded-lg shadow-sm ${className}`}>
+    {children}
+  </div>
+);
 
 const Dashboard: React.FC = () => {
   const [filterStatus, setFilterStatus] = useState<StatusBadgeProps['status'] | 'all'>('all');
@@ -113,66 +119,72 @@ const Dashboard: React.FC = () => {
     <div className="space-y-6 p-6">
       {/* Top Stats */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-white p-6 rounded-lg shadow-sm">
-          <div className="flex items-center">
-            <div className="bg-blue-500 rounded-full p-3">
-              <BarChart className="h-8 w-8 text-white" />
-            </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-500">Total Loans</p>
-              <p className="text-2xl font-semibold text-gray-900">1,284</p>
-              <p className="text-sm text-green-600">↑ 12.5% from last month</p>
+        <Card>
+          <div className="p-6">
+            <div className="flex items-center">
+              <div className="bg-blue-500 rounded-full p-3">
+                <BarChart className="h-8 w-8 text-white" />
+              </div>
+              <div className="ml-4">
+                <p className="text-sm font-medium text-gray-500">Total Loans</p>
+                <p className="text-2xl font-semibold text-gray-900">1,284</p>
+                <p className="text-sm text-green-600">↑ 12.5% from last month</p>
+              </div>
             </div>
           </div>
-        </div>
+        </Card>
 
-        <div className="bg-white p-6 rounded-lg shadow-sm">
-          <div className="flex items-center">
-            <div className="bg-green-500 rounded-full p-3">
-              <DollarSign className="h-8 w-8 text-white" />
-            </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-500">Loan Volume</p>
-              <p className="text-2xl font-semibold text-gray-900">$12.4M</p>
-              <p className="text-sm text-green-600">↑ 8.3% from last month</p>
+        <Card>
+          <div className="p-6">
+            <div className="flex items-center">
+              <div className="bg-green-500 rounded-full p-3">
+                <DollarSign className="h-8 w-8 text-white" />
+              </div>
+              <div className="ml-4">
+                <p className="text-sm font-medium text-gray-500">Loan Volume</p>
+                <p className="text-2xl font-semibold text-gray-900">$12.4M</p>
+                <p className="text-sm text-green-600">↑ 8.3% from last month</p>
+              </div>
             </div>
           </div>
-        </div>
+        </Card>
 
-        <div className="bg-white p-6 rounded-lg shadow-sm">
-          <div className="flex items-center">
-            <div className="bg-yellow-500 rounded-full p-3">
-              <Users className="h-8 w-8 text-white" />
-            </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-500">Active Borrowers</p>
-              <p className="text-2xl font-semibold text-gray-900">957</p>
-              <p className="text-sm text-green-600">↑ 5.2% from last month</p>
+        <Card>
+          <div className="p-6">
+            <div className="flex items-center">
+              <div className="bg-yellow-500 rounded-full p-3">
+                <Users className="h-8 w-8 text-white" />
+              </div>
+              <div className="ml-4">
+                <p className="text-sm font-medium text-gray-500">Active Borrowers</p>
+                <p className="text-2xl font-semibold text-gray-900">957</p>
+                <p className="text-sm text-green-600">↑ 5.2% from last month</p>
+              </div>
             </div>
           </div>
-        </div>
+        </Card>
 
-        <div className="bg-white p-6 rounded-lg shadow-sm">
-          <div className="flex items-center">
-            <div className="bg-red-500 rounded-full p-3">
-              <AlertTriangle className="h-8 w-8 text-white" />
-            </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-500">At-Risk Loans</p>
-              <p className="text-2xl font-semibold text-gray-900">24</p>
-              <p className="text-sm text-red-600">↑ 2 from last week</p>
+        <Card>
+          <div className="p-6">
+            <div className="flex items-center">
+              <div className="bg-red-500 rounded-full p-3">
+                <AlertTriangle className="h-8 w-8 text-white" />
+              </div>
+              <div className="ml-4">
+                <p className="text-sm font-medium text-gray-500">At-Risk Loans</p>
+                <p className="text-2xl font-semibold text-gray-900">24</p>
+                <p className="text-sm text-red-600">↑ 2 from last week</p>
+              </div>
             </div>
           </div>
-        </div>
+        </Card>
       </div>
 
       {/* Charts Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card>
-          <CardHeader>
-            <CardTitle>Loan Volume Trends</CardTitle>
-          </CardHeader>
-          <CardContent>
+          <div className="p-6">
+            <h3 className="text-lg font-semibold mb-4">Loan Volume Trends</h3>
             <div className="h-[300px]">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={trendData}>
@@ -184,14 +196,12 @@ const Dashboard: React.FC = () => {
                 </LineChart>
               </ResponsiveContainer>
             </div>
-          </CardContent>
+          </div>
         </Card>
 
         <Card>
-          <CardHeader>
-            <CardTitle>Approval Rate Trends</CardTitle>
-          </CardHeader>
-          <CardContent>
+          <div className="p-6">
+            <h3 className="text-lg font-semibold mb-4">Approval Rate Trends</h3>
             <div className="h-[300px]">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={trendData}>
@@ -203,12 +213,12 @@ const Dashboard: React.FC = () => {
                 </LineChart>
               </ResponsiveContainer>
             </div>
-          </CardContent>
+          </div>
         </Card>
       </div>
 
       {/* Recent Applications */}
-      <div className="bg-white shadow-sm rounded-lg">
+      <Card>
         <div className="p-6">
           <div className="flex justify-between items-center mb-4">
             <h3 className="text-lg font-semibold text-gray-900">Recent Loan Applications</h3>
@@ -268,7 +278,7 @@ const Dashboard: React.FC = () => {
             </table>
           </div>
         </div>
-      </div>
+      </Card>
     </div>
   );
 };
